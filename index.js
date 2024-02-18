@@ -4,18 +4,20 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const dotenv = require('dotenv');
 
-dotenv.config();
 const app = express();
+dotenv.config();
+
 const io = new Server(process.env.PORT);
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // Allow requests from this origin
+    origin: '*', // Allow requests from this origin
     methods: ["GET", "POST"], // Allow only specified HTTP methods
     allowedHeaders: ["Content-Type"],
   })
 ); // Allow all origins (you can configure more specific settings if needed)
 
+console.log('DEBUG env', process.env);
 io.on("connection", (socket) => {
   socket.on("join", ({ username }) => {
     console.log("DEBUG username", username);
